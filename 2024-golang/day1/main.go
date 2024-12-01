@@ -4,6 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+  "os"
+  "strings"
+  "strconv"
 )
 
 func abs(x int) int {
@@ -12,6 +15,30 @@ func abs(x int) int {
 	}
 
 	return 0 - x
+}
+
+func readListsFromFile(path string)([]int, []int, error){
+  fileBytes, err := os.ReadFile(path)
+  if err != nil{
+    return nil, nil, err
+  }
+  fileStr := string(fileBytes)
+  values := strings.Fields(fileStr) 
+
+  l1 := make([]int, 0)
+  l2 := make([]int, 0)
+  for index, value := range values{
+    intVal, err := strconv.Atoi(value)
+    if err != nil {
+      return nil, nil, err
+    }
+    if index % 2 == 0{
+      l1 = append(l1, intVal)
+    }else{
+      l2 = append(l2, intVal)
+    }
+  }
+  return l1, l2, nil
 }
 
 func sum(list []int) int{
@@ -47,8 +74,13 @@ func diff(l1 []int, l2 []int) ([]int, error) {
 
 func main() {
 	fmt.Println("hello world")
-	l1 := []int{3, 4, 2, 1, 3, 3}
-	l2 := []int{4, 3, 5, 3, 9, 3}
+  path := "./input.txt"
+  l1, l2, err := readListsFromFile(path)
+  if err != nil{
+		fmt.Println("an error occured!")
+		return
+    
+  }
 	fmt.Println("------------------- before sorting")
 	printLists(l1, l2)
 
