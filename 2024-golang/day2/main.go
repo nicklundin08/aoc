@@ -15,7 +15,7 @@ func main() {
 	fmt.Printf("Total number of lines in file %d.\n", len(result))
 	passCount := 0
 	for _, row := range result {
-		if rowPasses(row) {
+		if rowPasses(row, true) {
 			passCount++
 		}
 	}
