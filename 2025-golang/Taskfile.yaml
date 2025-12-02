@@ -1,0 +1,18 @@
+version: "3"
+
+tasks:
+  run:
+    summary: |
+      Runs the main file
+    desc: |
+      Runs the main file
+    cmds:
+      - go run main.go
+
+  test:
+    summary: |
+      Executes all tests
+    desc: |
+      Executes all tests
+    cmds:
+      - go test -v ./...
