@@ -22,7 +22,7 @@ func Test__SuppliedCaseWithFile(t *testing.T) {
 		fmt.Println("An error occured", err)
 	}
 
-	want := 3
+	want := 6
 	if answer != want {
 		t.Errorf(`Default Case = %d, want %d`, answer, want)
 	}
@@ -40,11 +40,31 @@ func Test__SuppliedCase(t *testing.T) {
 		MoveLeft(99).
 		MoveRight(14).
 		MoveLeft(82).
-		ZeroCounter
+		GetZeroCounter()
 
-	want := 3
+	want := 6
 	if answer != want {
 		t.Errorf(`Default Case = %d, want %d`, answer, want)
+	}
+}
+
+func TestIsValid(t *testing.T) {
+	if !MakeCounter(50).isValid() {
+		t.Errorf(`Counter(50) should be valid`)
+	}
+
+	if MakeCounter(-1).isValid() {
+		t.Errorf(`Counter(-1) should not be valid`)
+	}
+
+	if MakeCounter(100).isValid() {
+		t.Errorf(`Counter(100) should not be valid`)
+	}
+	if !MakeCounter(99).isValid() {
+		t.Errorf(`Counter(99) should be valid`)
+	}
+	if !MakeCounter(0).isValid() {
+		t.Errorf(`Counter(0) should be valid`)
 	}
 }
 
@@ -55,8 +75,8 @@ func TestMoveRight__DontRoll(t *testing.T) {
 		t.Errorf(`Wanted Counter.Current to be 49 but was %d`, c.Current)
 	}
 
-	if c.ZeroCounter != 0 {
-		t.Errorf(`Wanted Counter.ZeroCounter to be 0 but was %d`, c.ZeroCounter)
+	if c.GetZeroCounter() != 0 {
+		t.Errorf(`Wanted Counter.GetZeroCounter() to be 0 but was %d`, c.GetZeroCounter())
 	}
 }
 
@@ -67,8 +87,8 @@ func TestMoveLeft__DontRoll(t *testing.T) {
 		t.Errorf(`Wanted Counter.Current to be 51 but was %d`, c.Current)
 	}
 
-	if c.ZeroCounter != 0 {
-		t.Errorf(`Wanted Counter.ZeroCounter to be 0 but was %d`, c.ZeroCounter)
+	if c.GetZeroCounter() != 0 {
+		t.Errorf(`Wanted Counter.GetZeroCounter() to be 0 but was %d`, c.GetZeroCounter())
 	}
 }
 
@@ -81,8 +101,8 @@ func TestMoveRight__Roll(t *testing.T) {
 		t.Errorf(`Wanted Counter.Current to be 0 but was %d`, c.Current)
 	}
 
-	if c.ZeroCounter != 2 {
-		t.Errorf(`Wanted Counter.ZeroCounter to be 2 but was %d`, c.ZeroCounter)
+	if c.GetZeroCounter() != 2 {
+		t.Errorf(`Wanted Counter.GetZeroCounter() to be 2 but was %d`, c.GetZeroCounter())
 	}
 }
 
@@ -95,8 +115,8 @@ func TestMoveLeft__Roll(t *testing.T) {
 		t.Errorf(`Wanted Counter.Current to be 0 but was %d`, c.Current)
 	}
 
-	if c.ZeroCounter != 2 {
-		t.Errorf(`Wanted Counter.ZeroCounter to be 2 but was %d`, c.ZeroCounter)
+	if c.GetZeroCounter() != 2 {
+		t.Errorf(`Wanted Counter.GetZeroCounter() to be 2 but was %d`, c.GetZeroCounter())
 	}
 }
 
@@ -113,7 +133,7 @@ func getAnswer(path string) (int, error) {
 			return 0, err
 		}
 	}
-	return counter.ZeroCounter, nil
+	return counter.GetZeroCounter(), nil
 }
 
 func readFile(path string) ([]string, error) {
